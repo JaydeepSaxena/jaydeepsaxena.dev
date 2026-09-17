@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jaydeep Saxena — UI/UX Designer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FAF8F3;
+    --ink:#1B1F23;
+    --blueprint:#1E4D8C;
+    --blueprint-soft:#4472A8;
+    --amber:#C97A2B;
+    --line:#D6D3CB;
+    --muted:#726F68;
+    --card:#F1EEE6;
+    --font-display:'Space Grotesk', 'Arial Narrow', sans-serif;
+    --font-body:'IBM Plex Sans', -apple-system, sans-serif;
+    --font-mono:'IBM Plex Mono', monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#15171B;
+      --ink:#EDEAE2;
+      --blueprint:#7FA8DE;
+      --blueprint-soft:#5E86B8;
+      --amber:#E3A15C;
+      --line:#2C2F34;
+      --muted:#9B978E;
+      --card:#1D2024;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#15171B;
+    --ink:#EDEAE2;
+    --blueprint:#7FA8DE;
+    --blueprint-soft:#5E86B8;
+    --amber:#E3A15C;
+    --line:#2C2F34;
+    --muted:#9B978E;
+    --card:#1D2024;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--font-body);
+    font-size:17px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{color:inherit;}
+  img{max-width:100%;}
+
+  ::selection{background:var(--blueprint); color:var(--paper);}
+
+  :focus-visible{
+    outline:2px solid var(--blueprint);
+    outline-offset:3px;
+  }
+
+  .wrap{
+    max-width:1080px;
+    margin:0 auto;
+    padding:0 32px;
+  }
+
+  /* ---------- background drafting grid ---------- */
+  .grid-bg{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:0;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size:64px 64px;
+    opacity:0.35;
+    mask-image:linear-gradient(to bottom, black, black 60%, transparent 100%);
+  }
+
+  /* ---------- header ---------- */
+  header{
+    position:sticky;
+    top:0;
+    z-index:10;
+    background:color-mix(in srgb, var(--paper) 88%, transparent);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .header-inner{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:20px 32px;
+    max-width:1080px;
+    margin:0 auto;
+  }
+  .mark{
+    font-family:var(--font-display);
+    font-weight:600;
+    font-size:1.15rem;
+    letter-spacing:0.01em;
+    text-decoration:none;
+    display:flex;
+    align-items:baseline;
+    gap:6px;
+  }
+  .mark span{
+    font-family:var(--font-mono);
+    font-size:0.7rem;
+    color:var(--blueprint);
+    font-weight:500;
+  }
+  nav{display:flex; gap:32px; align-items:center;}
+  nav a{
+    font-size:0.92rem;
+    text-decoration:none;
+    color:var(--muted);
+    transition:color 0.15s ease;
+  }
+  nav a:hover{color:var(--ink);}
+  .nav-cta{
+    color:var(--ink) !important;
+    border:1px solid var(--ink);
+    padding:8px 16px;
+    border-radius:2px;
+    font-size:0.85rem;
+  }
+  .nav-cta:hover{
+    background:var(--ink);
+    color:var(--paper) !important;
+  }
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;
+    z-index:1;
+    padding:96px 0 88px;
+    display:grid;
+    grid-template-columns:1.15fr 0.85fr;
+    gap:48px;
+    align-items:center;
+  }
+  .hero-kicker{
+    font-family:var(--font-mono);
+    font-size:0.82rem;
+    color:var(--blueprint);
+    margin-bottom:20px;
+    letter-spacing:0.02em;
+  }
+  .hero h1{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:clamp(2.6rem, 5.4vw, 4.1rem);
+    line-height:1.04;
+    letter-spacing:-0.01em;
+    max-width:11ch;
+  }
+  .hero p.lede{
+    margin-top:24px;
+    font-size:1.15rem;
+    color:var(--muted);
+    max-width:46ch;
+    line-height:1.65;
+  }
+  .hero-actions{
+    margin-top:36px;
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+  }
+  .btn{
+    font-family:var(--font-body);
+    font-weight:500;
+    font-size:0.95rem;
+    padding:13px 24px;
+    border-radius:2px;
+    text-decoration:none;
+    display:inline-block;
+    transition:transform 0.15s ease, background 0.15s ease;
+  }
+  .btn-primary{
+    background:var(--blueprint);
+    color:#FAF8F3;
+  }
+  .btn-primary:hover{transform:translateY(-1px); background:var(--blueprint-soft);}
+  .btn-ghost{
+    border:1px solid var(--line);
+    color:var(--ink);
+  }
+  .btn-ghost:hover{border-color:var(--ink);}
+
+  .hero-diagram{
+    position:relative;
+  }
+  .hero-diagram svg{width:100%; height:auto; display:block;}
+
+  /* ---------- section frame ---------- */
+  section{
+    position:relative;
+    z-index:1;
+    padding:80px 0;
+    border-top:1px solid var(--line);
+  }
+  .section-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    gap:24px;
+    margin-bottom:52px;
+  }
+  .section-num{
+    font-family:var(--font-mono);
+    font-size:0.8rem;
+    color:var(--blueprint);
+  }
+  .section-title{
+    font-family:var(--font-display);
+    font-weight:600;
+    font-size:1.9rem;
+  }
+  .section-note{
+    font-size:0.95rem;
+    color:var(--muted);
+    max-width:32ch;
+    text-align:right;
+  }
+
+  /* ---------- work list ---------- */
+  .work-row{
+    display:grid;
+    grid-template-columns:88px 1fr 200px;
+    gap:28px;
+    padding:32px 0;
+    border-top:1px solid var(--line);
+    align-items:start;
+  }
+  .work-row:first-of-type{border-top:1px solid var(--line);}
+  .sheet-no{
+    font-family:var(--font-mono);
+    font-size:0.85rem;
+    color:var(--amber);
+    padding-top:4px;
+  }
+  .work-title{
+    font-family:var(--font-display);
+    font-weight:600;
+    font-size:1.35rem;
+    margin-bottom:10px;
+  }
+  .work-desc{
+    color:var(--muted);
+    font-size:1rem;
+    max-width:56ch;
+    line-height:1.65;
+  }
+  .work-tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:14px;
+  }
+  .tag{
+    font-family:var(--font-mono);
+    font-size:0.72rem;
+    color:var(--blueprint);
+    border:1px solid var(--line);
+    padding:4px 9px;
+    border-radius:2px;
+  }
+  .work-meta{
+    text-align:right;
+    font-size:0.88rem;
+    color:var(--muted);
+  }
+  .work-meta strong{
+    display:block;
+    color:var(--ink);
+    font-weight:600;
+    font-size:0.95rem;
+    margin-bottom:4px;
+  }
+
+  /* ---------- about ---------- */
+  .about-grid{
+    display:grid;
+    grid-template-columns:0.9fr 1.1fr;
+    gap:56px;
+  }
+  .about-grid p{
+    color:var(--muted);
+    margin-bottom:18px;
+    max-width:52ch;
+    font-size:1.02rem;
+  }
+  .stat-list{
+    display:flex;
+    flex-direction:column;
+    gap:26px;
+  }
+  .stat{
+    border-left:2px solid var(--blueprint);
+    padding-left:18px;
+  }
+  .stat-value{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:2.1rem;
+    color:var(--ink);
+  }
+  .stat-label{
+    font-size:0.88rem;
+    color:var(--muted);
+    margin-top:2px;
+  }
+
+  /* ---------- process ---------- */
+  .process-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+  }
+  .process-card{
+    background:var(--paper);
+    padding:32px 28px;
+  }
+  .process-card .step-tag{
+    font-family:var(--font-mono);
+    font-size:0.78rem;
+    color:var(--amber);
+    display:block;
+    margin-bottom:14px;
+  }
+  .process-card h3{
+    font-family:var(--font-display);
+    font-size:1.15rem;
+    font-weight:600;
+    margin-bottom:10px;
+  }
+  .process-card p{
+    color:var(--muted);
+    font-size:0.94rem;
+    line-height:1.6;
+  }
+
+  /* ---------- contact ---------- */
+  .contact{
+    display:grid;
+    grid-template-columns:1.2fr 0.8fr;
+    gap:48px;
+    align-items:end;
+  }
+  .contact h2{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:clamp(2rem, 4vw, 2.8rem);
+    line-height:1.15;
+    max-width:15ch;
+  }
+  .contact-links{
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+  }
+  .contact-link{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:16px 0;
+    border-bottom:1px solid var(--line);
+    text-decoration:none;
+    color:var(--ink);
+    font-size:1.02rem;
+    transition:padding-left 0.15s ease;
+  }
+  .contact-link:hover{padding-left:6px; color:var(--blueprint);}
+  .contact-link .k{
+    font-family:var(--font-mono);
+    font-size:0.78rem;
+    color:var(--muted);
+  }
+
+  footer{
+    padding:32px 0 48px;
+    border-top:1px solid var(--line);
+    display:flex;
+    justify-content:space-between;
+    font-size:0.85rem;
+    color:var(--muted);
+    position:relative;
+    z-index:1;
+  }
+
+  @media (max-width: 780px){
+    .wrap{padding:0 20px;}
+    .header-inner{padding:16px 20px;}
+    nav{gap:18px;}
+    .nav-cta{display:none;}
+    .hero{grid-template-columns:1fr; padding:56px 0 48px; gap:36px;}
+    .hero h1{max-width:none;}
+    .section-head{flex-direction:column; align-items:flex-start; gap:8px;}
+    .section-note{text-align:left;}
+    .work-row{grid-template-columns:1fr; gap:10px;}
+    .sheet-no{padding-top:0;}
+    .work-meta{text-align:left;}
+    .about-grid{grid-template-columns:1fr; gap:36px;}
+    .process-grid{grid-template-columns:1fr;}
+    .contact{grid-template-columns:1fr; gap:32px;}
+    footer{flex-direction:column; gap:8px;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{transition:none !important; animation:none !important;}
+  }
+</style>
+</head>
+<body>
+
+<div class="grid-bg" aria-hidden="true"></div>
+
+<header>
+  <div class="header-inner">
+    <a href="#top" class="mark">Jaydeep Saxena <span>UI/UX</span></a>
+    <nav>
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="#contact" class="nav-cta">Get in touch</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top" class="wrap">
+
+  <section class="hero" style="border-top:none;">
+    <div>
+      <div class="hero-kicker">FREELANCE UI/UX DESIGNER</div>
+      <h1>Designing digital ground plans for the built and moving world.</h1>
+      <p class="lede">I design websites and apps for industries that build and move things — construction firms and transit services — turning technical, high-stakes work into interfaces people can navigate at a glance.</p>
+      <div class="hero-actions">
+        <a href="#work" class="btn btn-primary">View selected work</a>
+        <a href="mailto:kuldeepsaxenaks814@gmail.com" class="btn btn-ghost">Email me</a>
+      </div>
+    </div>
+    <div class="hero-diagram" aria-hidden="true">
+      <svg viewBox="0 0 420 380" xmlns="http://www.w3.org/2000/svg">
+        <!-- structural building outline -->
+        <rect x="60" y="140" width="140" height="180" fill="none" stroke="var(--blueprint)" stroke-width="2"/>
+        <line x1="60" y1="170" x2="200" y2="170" stroke="var(--blueprint)" stroke-width="1" opacity="0.6"/>
+        <line x1="60" y1="200" x2="200" y2="200" stroke="var(--blueprint)" stroke-width="1" opacity="0.6"/>
+        <line x1="60" y1="230" x2="200" y2="230" stroke="var(--blueprint)" stroke-width="1" opacity="0.6"/>
+        <line x1="60" y1="260" x2="200" y2="260" stroke="var(--blueprint)" stroke-width="1" opacity="0.6"/>
+        <line x1="60" y1="290" x2="200" y2="290" stroke="var(--blueprint)" stroke-width="1" opacity="0.6"/>
+        <line x1="90" y1="140" x2="90" y2="320" stroke="var(--blueprint)" stroke-width="1" opacity="0.4"/>
+        <line x1="130" y1="140" x2="130" y2="320" stroke="var(--blueprint)" stroke-width="1" opacity="0.4"/>
+        <line x1="170" y1="140" x2="170" y2="320" stroke="var(--blueprint)" stroke-width="1" opacity="0.4"/>
+        <polygon points="60,140 130,90 200,140" fill="none" stroke="var(--blueprint)" stroke-width="2"/>
+
+        <!-- rail line running through the scene -->
+        <path d="M20 330 C 130 300, 250 350, 400 300" fill="none" stroke="var(--amber)" stroke-width="2"/>
+        <path d="M20 340 C 130 310, 250 360, 400 310" fill="none" stroke="var(--amber)" stroke-width="2"/>
+        <line x1="35" y1="328" x2="35" y2="343" stroke="var(--amber)" stroke-width="2"/>
+        <line x1="80" y1="315" x2="80" y2="330" stroke="var(--amber)" stroke-width="2"/>
+        <line x1="125" y1="305" x2="125" y2="320" stroke="var(--amber)" stroke-width="2"/>
+        <line x1="170" y1="303" x2="170" y2="318" stroke="var(--amber)" stroke-width="2"/>
+        <line x1="215" y1="310" x2="215" y2="325" stroke="var(--amber)" stroke-width="2"/>
+        <line x1="260" y1="322" x2="260" y2="337" stroke="var(--amber)" stroke-width="2"/>
+        <line x1="305" y1="330" x2="305" y2="345" stroke="var(--amber)" stroke-width="2"/>
+        <line x1="350" y1="323" x2="350" y2="338" stroke="var(--amber)" stroke-width="2"/>
+
+        <!-- dimension / scale annotations -->
+        <line x1="230" y1="140" x2="230" y2="320" stroke="var(--muted)" stroke-width="1" opacity="0.5" stroke-dasharray="3 4"/>
+        <text x="238" y="230" font-family="IBM Plex Mono, monospace" font-size="10" fill="var(--muted)">180'-0"</text>
+        <circle cx="330" cy="70" r="26" fill="none" stroke="var(--muted)" stroke-width="1" opacity="0.6"/>
+        <line x1="330" y1="44" x2="330" y2="96" stroke="var(--muted)" stroke-width="1" opacity="0.6"/>
+        <line x1="304" y1="70" x2="356" y2="70" stroke="var(--muted)" stroke-width="1" opacity="0.6"/>
+        <text x="322" y="35" font-family="IBM Plex Mono, monospace" font-size="10" fill="var(--muted)">N</text>
+      </svg>
+    </div>
+  </section>
+
+  <section id="work">
+    <div class="section-head">
+      <div>
+        <div class="section-num">01 — SELECTED WORK</div>
+        <div class="section-title">Sites &amp; systems I've designed</div>
+      </div>
+      <div class="section-note">A mix of construction-sector marketing sites and a full app-plus-website railway service.</div>
+    </div>
+
+    <div class="work-row">
+      <div class="sheet-no">A-101</div>
+      <div>
+        <div class="work-title">Construction company websites</div>
+        <div class="work-desc">Marketing and portfolio sites for construction firms — designed to present ongoing and completed projects clearly, build trust with prospective clients, and make it easy to request a quote or get in touch.</div>
+        <div class="work-tags">
+          <span class="tag">Website design</span>
+          <span class="tag">Construction</span>
+          <span class="tag">Lead generation</span>
+        </div>
+      </div>
+      <div class="work-meta"><strong>3–4 sites</strong>Freelance projects</div>
+    </div>
+
+    <div class="work-row">
+      <div class="sheet-no">L-01</div>
+      <div>
+        <div class="work-title">Railway service — app &amp; website</div>
+        <div class="work-desc">End-to-end UI/UX for a railway service, spanning both the mobile app and the companion website — covering flows like schedules, bookings, and journey information for everyday commuters.</div>
+        <div class="work-tags">
+          <span class="tag">App design</span>
+          <span class="tag">Website design</span>
+          <span class="tag">Transit</span>
+        </div>
+      </div>
+      <div class="work-meta"><strong>App + Web</strong>End-to-end UX</div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="section-head">
+      <div>
+        <div class="section-num">02 — ABOUT</div>
+        <div class="section-title">How I work</div>
+      </div>
+    </div>
+    <div class="about-grid">
+      <div>
+        <p>I'm Jaydeep Saxena, a freelance UI/UX designer. I like working on projects with real physical and operational stakes — construction and transit — where clarity in the interface directly affects how well someone can plan a build or catch a train.</p>
+        <p>My process starts with understanding how the underlying service actually works, then designing interfaces that make that structure legible to the people using it, whether that's a homeowner comparing contractors or a commuter checking a schedule.</p>
+      </div>
+      <div class="stat-list">
+        <div class="stat">
+          <div class="stat-value">3–4</div>
+          <div class="stat-label">Construction company websites designed</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">1</div>
+          <div class="stat-label">Railway service designed end-to-end, app &amp; website</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">Freelance</div>
+          <div class="stat-label">Currently taking on new UI/UX projects</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <div>
+        <div class="section-num">03 — APPROACH</div>
+        <div class="section-title">What I bring to a project</div>
+      </div>
+    </div>
+    <div class="process-grid">
+      <div class="process-card">
+        <span class="step-tag">Research</span>
+        <h3>Understand the operation</h3>
+        <p>Before any screen gets designed, I map out how the business or service actually runs — its processes, constraints, and the people it serves.</p>
+      </div>
+      <div class="process-card">
+        <span class="step-tag">Design</span>
+        <h3>Structure before style</h3>
+        <p>I design information architecture and flows first, then bring in visual style — so the interface stays clear even as it gets polished.</p>
+      </div>
+      <div class="process-card">
+        <span class="step-tag">Delivery</span>
+        <h3>Built for handoff</h3>
+        <p>Whether it's a website or an app, I deliver designs that are ready for development, with the details developers need already worked out.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="contact">
+      <h2>Have a construction or transit project in mind?</h2>
+      <div class="contact-links">
+        <a class="contact-link" href="mailto:kuldeepsaxenaks814@gmail.com">
+          <span>kuldeepsaxenaks814@gmail.com</span>
+          <span class="k">EMAIL</span>
+        </a>
+        <a class="contact-link" href="https://github.com/JaydeepSaxena" target="_blank" rel="noopener">
+          <span>github.com/JaydeepSaxena</span>
+          <span class="k">GITHUB</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <span>Jaydeep Saxena — UI/UX Designer</span>
+  <span>Available for freelance work</span>
+</footer>
+
+</body>
+</html>
